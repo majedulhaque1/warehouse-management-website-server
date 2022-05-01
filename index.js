@@ -28,6 +28,21 @@ async function run() {
             console.log(result);
             res.send(result);
         })
+        app.put('/additem/:id', async (req, res) =>{
+            const id = req.params.id;
+            console.log(id);
+            const updatedItem = req.body;
+            console.log(updatedItem);
+            const filter = {_id : ObjectId(id)};
+            const options = { upsert : true};
+            const updatedDoc = {
+                $set:{
+                    quantity : updatedItem.quantity
+                }
+            }
+            const result = await carCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        })
         app.get('/additem', async (req, res) =>{
             const query = {};
             const cursor = carCollection.find(query);
