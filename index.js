@@ -19,7 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try{
         await client.connect();
-
+        console.log('db connected');
         const carCollection = client.db('cardelars').collection('cars');
         app.get('/additem/:Id', async (req, res) =>{
             const id = req.params.Id;
@@ -30,9 +30,7 @@ async function run() {
         })
         app.put('/additem/:id', async (req, res) =>{
             const id = req.params.id;
-            console.log(id);
             const updatedItem = req.body;
-            console.log(updatedItem);
             const filter = {_id : ObjectId(id)};
             const options = { upsert : true};
             const updatedDoc = {
